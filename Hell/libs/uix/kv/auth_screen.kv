@@ -1,0 +1,152 @@
+<AuthScreen>
+    canvas.before:
+        Color:
+            rgba: self.bg_color
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    PBoxLayout:
+        id: form
+        orientation: "vertical"
+        disabled: True
+        opacity: 0 if self.disabled else 1
+        adaptive_height: True
+        spacing: dp(15)
+        pos_hint: {"center_x": .5, "center_y": .4}
+
+        PTextField:
+            id: uname
+            text: ""
+            hint_text: "Username"
+            disabled: form.disabled
+            size_hint: .7, None
+            height: dp(40)
+            pos_hint: {"center_x": .5}
+
+            translate_x: 0
+            translate_y: 0
+            scale_x: 1
+            scale_y: 1
+            rotate: 0
+
+            canvas.before:
+                PushMatrix
+                Translate:
+                    x: self.translate_x or 0
+                    y: self.translate_y or 0
+
+                Rotate:
+                    origin: self.center
+                    angle: self.rotate or 0
+
+                Scale:
+                    origin: self.center
+                    x: self.scale_x or 1
+                    y: self.scale_y or 1
+            canvas.after:
+                PopMatrix
+
+
+        PTextField:
+            id: password
+            text: ""
+            hint_text: "Password"
+            disabled: form.disabled
+            password: True
+            size_hint: .7, None
+            height: dp(40)
+            pos_hint: {"center_x": .5}
+
+            translate_x: 0
+            translate_y: 0
+            scale_x: 1
+            scale_y: 1
+            rotate: 0
+
+            canvas.before:
+                PushMatrix
+                Translate:
+                    x: self.translate_x or 0
+                    y: self.translate_y or 0
+
+                Rotate:
+                    origin: self.center
+                    angle: self.rotate or 0
+
+                Scale:
+                    origin: self.center
+                    x: self.scale_x or 1
+                    y: self.scale_y or 1
+            canvas.after:
+                PopMatrix
+
+        Widget:
+            size_hint_y: None
+            height: dp(25)
+
+        PBoxLayout:
+            adaptive_size: True
+            pos_hint: {"center_x": .5}
+            spacing: dp(10)
+
+            PButton:
+                text: "Sign Up"
+                disabled: form.disabled
+                on_release: root.sign_up()
+
+            PButton:
+                text: "Sign In"
+                mode: "outlined"
+                disabled: form.disabled
+                on_release: root.sign_in()
+
+    PBoxLayout:
+        id: intro
+        orientation: "vertical"
+        adaptive_height: True
+        pos_hint: {"center_x": .5, "center_y": .55}
+
+        PLabel:
+            id: title
+            text: "velox[size=150sp].[/size]"
+            font_size: sp(100)
+            markup: True
+            font_name: "LexendMedium"
+            text_color: 1, 1, 1, 1
+            scale: 1
+            adaptive_height: True
+            canvas.before:
+                PushMatrix
+                Scale:
+                    origin: self.center
+                    x: self.scale
+                    y: self.scale
+            canvas.after:
+                PopMatrix
+
+        PButton:
+            id: intro_btn
+            text: "Get Started"
+            mode: "contained"
+            text_color: 1, 1, 1, 1
+            pos_hint: {"center_x": .5}
+            on_release: root.show_form()
+
+<AboutDialogContent2>
+    adaptive_height: True
+    padding: dp(20)
+    spacing: dp(10)
+    orientation: "vertical"
+
+    PLabel:
+        text: "Warning"
+        font_size: dp(20)
+        font_name: "LexendMedium"
+        adaptive_height: True
+
+    PLabel:
+        text: "This app has no functions as of now and should not / can't be used as a chat app as of right now."
+        text_size: self.width, None
+        halign: "center"
+        adaptive_height: True

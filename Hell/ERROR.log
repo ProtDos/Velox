@@ -1,0 +1,28 @@
+Traceback (most recent call last):
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\main.py", line 6, in <module>
+    PurpApp().run()
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\app.py", line 955, in run
+    runTouchApp()
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\base.py", line 574, in runTouchApp
+    EventLoop.mainloop()
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\base.py", line 339, in mainloop
+    self.idle()
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\base.py", line 383, in idle
+    self.dispatch_input()
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\base.py", line 334, in dispatch_input
+    post_dispatch_input(*pop(0))
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\base.py", line 302, in post_dispatch_input
+    wid.dispatch('on_touch_up', me)
+  File "kivy\_event.pyx", line 731, in kivy._event.EventDispatcher.dispatch
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\uix\behaviors\button.py", line 179, in on_touch_up
+    self.dispatch('on_release')
+  File "kivy\_event.pyx", line 727, in kivy._event.EventDispatcher.dispatch
+  File "kivy\_event.pyx", line 1307, in kivy._event.EventObservers.dispatch
+  File "kivy\_event.pyx", line 1191, in kivy._event.EventObservers._dispatch
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\lang\builder.py", line 55, in custom_callback
+    exec(__kvlang__.co_value, idmap)
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\kv\home_screen.kv", line 151, in <module>
+    on_release: root.create_chat(recipient.text)
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\baseclass\home_screen.py", line 77, in create_chat
+    HomeScreen.chats.append(data[rec])
+AttributeError: 'kivy.properties.ListProperty' object has no attribute 'append'
