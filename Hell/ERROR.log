@@ -21,8 +21,13 @@ Traceback (most recent call last):
   File "kivy\_event.pyx", line 1191, in kivy._event.EventObservers._dispatch
   File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\lang\builder.py", line 55, in custom_callback
     exec(__kvlang__.co_value, idmap)
-  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\kv\home_screen.kv", line 151, in <module>
-    on_release: root.create_chat(recipient.text)
-  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\baseclass\home_screen.py", line 77, in create_chat
-    HomeScreen.chats.append(data[rec])
-AttributeError: 'kivy.properties.ListProperty' object has no attribute 'append'
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\kv\auth_screen.kv", line 102, in <module>
+    on_release: root.sign_in()
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\baseclass\auth_screen.py", line 38, in sign_in
+    self.manager.set_current("home")
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\root.py", line 23, in set_current
+    screen_object = eval(screen["object"])
+  File "<string>", line 1, in <module>
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\baseclass\home_screen.py", line 31, in __init__
+    "on_touch_down": self.on_right_click(args),
+NameError: name 'args' is not defined

@@ -1,6 +1,8 @@
+import timeit
+
 from kivy.animation import Animation
 from kivy.lang import Builder
-from kivy.properties import BooleanProperty, ColorProperty, StringProperty
+from kivy.properties import BooleanProperty, ColorProperty, StringProperty, Clock
 from kivy.uix.behaviors import ButtonBehavior
 
 from components.boxlayout import PBoxLayout
@@ -57,7 +59,10 @@ Builder.load_string(
     padding: [dp(10), dp(15)]
     spacing: dp(10)
     adaptive_height: True
-
+    
+    #on_long_press:
+    #    app.nah("asd", "asd")
+    
     canvas.before:
         Color:
             rgba: root.bg_color
@@ -67,6 +72,7 @@ Builder.load_string(
             pos: self.pos
 
     PBoxLayout:
+       
         adaptive_size: True
         pos_hint: {"center_y": .5}
 
@@ -141,6 +147,9 @@ class ListItem(ButtonBehavior, ThemableBehavior, PBoxLayout):
         self.bg_color = self.theme_cls.bg_normal
         self.theme_cls.bind(theme_style=self._update_bg_color)
 
+        self.long_press_time = 1  # Time threshold for long press in seconds
+        self.long_press_event = None
+
     def _update_bg_color(self, *args):
         self.bg_color = self.theme_cls.bg_normal
 
@@ -156,6 +165,8 @@ class ListItem(ButtonBehavior, ThemableBehavior, PBoxLayout):
 
 class ChatListItem(ListItem):
     image = StringProperty()
+
+    name = StringProperty()
 
     time = StringProperty()
 
