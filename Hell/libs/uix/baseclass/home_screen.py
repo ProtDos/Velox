@@ -1,7 +1,7 @@
 import json
 
-from kivy.properties import ListProperty, NumericProperty, StringProperty
-
+from kivy.properties import ListProperty, NumericProperty, StringProperty, Clock
+from kivy.uix.button import Button
 from components.boxlayout import PBoxLayout
 from components.dialog import PDialog
 from components.screen import PScreen
@@ -17,10 +17,13 @@ class HomeScreen(PScreen):
         with open("assets/users.json") as f:
             self.data = json.load(f)
 
+        self.long_press_duration = 0.5  # Adjust this value to change the long press duration
+        self.long_press_active = False
+        self.long_press_trigger = None
+
         print(len(self.data))
 
         if self.data != {}:
-
             for i in self.data:
                 user_data = {
                     "text": i,
@@ -30,8 +33,8 @@ class HomeScreen(PScreen):
                     "name": i,
                     "unread_messages": self.data[i]["unread_messages"],
                     "on_release": lambda x={
-                        "name": i,
-                        **self.data[i],
+                         "name": i,
+                         **self.data[i],
                     }: self.goto_chat_screen(x),
 
                 }

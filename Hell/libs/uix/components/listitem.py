@@ -171,3 +171,5 @@ class ChatListItem(ListItem):
     time = StringProperty()
 
     unread_messages = BooleanProperty()
+
+
