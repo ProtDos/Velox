@@ -1,2 +1,9 @@
 {
+    "asd": {
+        "image": "assets/images/8.jpg",
+        "message": "This is a new message.",
+        "time": "21:41",
+        "about": "Just added!",
+        "unread_messages": false
+    }
 }

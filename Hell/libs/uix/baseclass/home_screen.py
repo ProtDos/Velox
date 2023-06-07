@@ -1,25 +1,24 @@
 import json
 
+from kivy.metrics import sp
 from kivy.properties import ListProperty, NumericProperty, StringProperty, Clock
 from kivy.uix.button import Button
 from components.boxlayout import PBoxLayout
 from components.dialog import PDialog
 from components.screen import PScreen
+from components.label import PLabel
 
 
 class HomeScreen(PScreen):
 
     chats = ListProperty()
     popup = None
+    popup2 = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         with open("assets/users.json") as f:
             self.data = json.load(f)
-
-        self.long_press_duration = 0.5  # Adjust this value to change the long press duration
-        self.long_press_active = False
-        self.long_press_trigger = None
 
         print(len(self.data))
 
@@ -32,17 +31,20 @@ class HomeScreen(PScreen):
                     "image": self.data[i]["image"],
                     "name": i,
                     "unread_messages": self.data[i]["unread_messages"],
-                    "on_release": lambda x={
-                         "name": i,
-                         **self.data[i],
-                    }: self.goto_chat_screen(x),
-
                 }
                 self.chats.append(user_data)
+                print(self.chats)
         else:
             self.ids.first.opacity = 1
 
-    def goto_chat_screen(self, user):
+    def goto_chat_screen(self, user3):
+        print(user3)
+        with open("assets/users.json") as f:
+            self.data = json.load(f)
+        user = {
+             "name": user3,
+             **self.data[user3],
+        }
         self.manager.set_current("chat")
         chat_screen = self.manager.get_screen("chat")
         chat_screen.user = user
@@ -57,28 +59,21 @@ class HomeScreen(PScreen):
         self.popup = PDialog(content=CreatePopup())
         self.popup.open()
 
-    def user_settings(self, args, i):
-        if args.button == "right":
-            print("waht user...")
-            print(i)
-            return
-        else:
-            self.goto_chat_screen(i)
-            return
-        print("okay")
-
-    def show_set(self, name):
+    def user_settings(self, name):
         with open("assets/users.json") as f:
             data = json.load(f)
         for item in data:
             if item == name:
-                PDialog(
+                print(item)
+                print(data[item])
+                self.popup2 = PDialog(
                     content=UserInfoDialogContent(
                         title=item,
-                        image=item["image"],
-                        about=item["about"],
+                        image=data[item]["image"],
+                        about=data[item]["about"],
                     )
-                ).open()
+                )
+                self.popup2.open()
                 return
 
 

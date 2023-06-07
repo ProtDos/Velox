@@ -20,8 +20,20 @@ from root import Root
 from utils.configparser import config
 from components.toast import toast
 
+from kivy.properties import BooleanProperty, ObjectProperty
+from kivy.clock import Clock
+
+from functools import partial
+
 if platform != "android":
     Window.size = (350, 650)
+
+def rename_variable_in_dict(dictionary, old_variable_name, new_variable_name):
+    if old_variable_name in dictionary:
+        value = dictionary[old_variable_name]
+        del dictionary[old_variable_name]
+        dictionary[new_variable_name] = value
+    return dictionary
 
 
 class PurpApp(App):
@@ -37,6 +49,10 @@ class PurpApp(App):
 
         Window.keyboard_anim_args = {"d": 0.2, "t": "linear"}
         Window.softinput_mode = "below_target"
+
+        self.long_press_duration = 0.3  # Adjust this value to change the long press duration
+        self.is_touching = False
+        self.long_press_trigger = None
 
     def build(self):
         self.root = Root()
@@ -86,10 +102,6 @@ class PurpApp(App):
             "time": t,
             "image": pb,
             "unread_messages": False,
-            "on_release": lambda x={
-                "name": rec,
-                **data2[rec],
-            }: self.root.get_screen("home").goto_chat_screen(x),
 
         }
         self.root.get_screen("home").chats.append(user_data)
@@ -97,9 +109,75 @@ class PurpApp(App):
 
         self.root.get_screen("home").popup.dismiss(force=True)
         self.root.get_screen("home").ids.first.opacity = 0
+        self.root.get_screen("home").ids.first.height = 0
 
     def nah(self, touch, name):
-        print(touch, name)
+        a, touch = touch
+        if a.collide_point(*touch.pos):
+            if touch.is_mouse_scrolling:
+                # Scrolling detected, ignore the touch event
+                return
+            self.is_touching = True
+            self.long_press_trigger = Clock.schedule_once(partial(self.check_press_type, name), self.long_press_duration)
+
+    def no(self, n, touch):
+        if self.is_touching:
+            if not n.collide_point(*touch.pos):
+                self.cancel_press()
+
+    def noo(self, n, touch, text):
+        if self.is_touching:
+            self.cancel_press()
+            if n.collide_point(*touch.pos):
+                print("Short press detected!")
+                self.root.get_screen("home").goto_chat_screen(text)
+                print(text)
+
+    def check_press_type(self, name, *args):
+        if self.is_touching:
+            print("Long press detected!")
+            self.root.get_screen("home").user_settings(name)
+            self.cancel_press()
+
+    def cancel_press(self):
+        self.is_touching = False
+        if self.long_press_trigger:
+            self.long_press_trigger.cancel()
+            self.long_press_trigger = None
+
+    def delete_user(self, user):
+        print("I have never called that functin")
+        # Read the JSON file
+        with open('assets/users.json', 'r') as file:
+            data = json.load(file)
+        # Delete the entry with key "asd"
+        if user in data:
+            del data[user]
+
+        # Write the updated data back to the JSON file
+        with open('assets/users.json', 'w') as file:
+            json.dump(data, file, indent=4)
+
+        self.root.get_screen("home").popup2.dismiss(force=True)
+
+        with open('assets/users.json', 'r') as file:
+            data = json.load(file)
+        self.root.get_screen("home").chats = []
+        if data != {}:
+            for i in data:
+                user_data = {
+                    "text": i,
+                    "secondary_text": data[i]["message"],
+                    "time": data[i]["time"],
+                    "image": data[i]["image"],
+                    "name": i,
+                    "unread_messages": data[i]["unread_messages"],
+                }
+                self.root.get_screen("home").chats.append(user_data)
+        else:
+            self.root.get_screen("home").ids.first.opacity = 1
+
+        self.root.set_current("home")
 
 
 if __name__ == "__main__":

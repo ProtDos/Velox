@@ -1,4 +1,10 @@
 Traceback (most recent call last):
+  File "kivy\_event.pyx", line 235, in kivy._event.EventDispatcher.__init__
+TypeError: object.__init__() takes exactly one argument (the instance to initialize)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
   File "C:\Users\Admin\PycharmProjects\Velox\Hell\main.py", line 6, in <module>
     PurpApp().run()
   File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\app.py", line 955, in run
@@ -28,6 +34,13 @@ Traceback (most recent call last):
   File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\root.py", line 23, in set_current
     screen_object = eval(screen["object"])
   File "<string>", line 1, in <module>
-  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\baseclass\home_screen.py", line 31, in __init__
-    "on_touch_down": self.on_right_click(args),
-NameError: name 'args' is not defined
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\uix\baseclass\home_screen.py", line 44, in __init__
+    self.ids.labelcase.add_widget(PLabel(id="first", opacity=0, text="Create a chat first", font_size=sp(14)), font_name="LexendMedium", adaptive_size=True)
+  File "C:\Users\Admin\PycharmProjects\Velox\Hell\libs\applibs\core\theming.py", line 52, in __init__
+    super().__init__(**kwargs)
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\uix\label.py", line 317, in __init__
+    super(Label, self).__init__(**kwargs)
+  File "C:\Users\Admin\PycharmProjects\EncryptionFinal\venv\lib\site-packages\kivy\uix\widget.py", line 357, in __init__
+    super(Widget, self).__init__(**kwargs)
+  File "kivy\_event.pyx", line 238, in kivy._event.EventDispatcher.__init__
+TypeError: Properties ['id'] passed to __init__ may not be existing property names. Valid properties are ['adaptive_height', 'adaptive_size', 'adaptive_width', 'anchors', 'base_direction', 'bold', 'center', 'center_x', 'center_y', 'children', 'cls', 'color', 'disabled', 'disabled_color', 'disabled_outline_color', 'ellipsis_options', 'font_blended', 'font_context', 'font_family', 'font_features', 'font_hinting', 'font_kerning', 'font_name', 'font_size', 'halign', 'height', 'ids', 'is_shortened', 'italic', 'line_height', 'markup', 'max_lines', 'mipmap', 'motion_filter', 'opacity', 'outline_color', 'outline_width', 'padding', 'padding_x', 'padding_y', 'parent', 'pos', 'pos_hint', 'refs', 'right', 'shorten', 'shorten_from', 'size', 'size_hint', 'size_hint_max', 'size_hint_max_x', 'size_hint_max_y', 'size_hint_min', 'size_hint_min_x', 'size_hint_min_y', 'size_hint_x', 'size_hint_y', 'split_str', 'strikethrough', 'strip', 'text', 'text_color', 'text_language', 'text_size', 'texture', 'texture_size', 'top', 'underline', 'unicode_errors', 'valign', 'width', 'x', 'y']
