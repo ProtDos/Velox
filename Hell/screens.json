@@ -18,5 +18,10 @@
         "import": "from baseclass.settings_screen import SettingsScreen",
         "object": "SettingsScreen()",
         "kv": "libs/uix/kv/settings_screen.kv"
+    },
+    "user_settings": {
+        "import": "from baseclass.user_settings import UserSettings",
+        "object": "UserSettings()",
+        "kv": "libs/uix/kv/user_settings.kv"
     }
 }
