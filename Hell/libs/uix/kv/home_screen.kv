@@ -68,6 +68,9 @@
         text: "Account"
         secondary_text: "Account details"
         icon: "user"
+        on_release:
+            root.parent.parent.dismiss()
+            app.root.set_current("user_settings")
 
     ListItem:
         text: "Settings"

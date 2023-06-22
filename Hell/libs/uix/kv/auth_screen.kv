@@ -1,4 +1,7 @@
 <AuthScreen>
+    uname: uname
+    password: password
+
     canvas.before:
         Color:
             rgba: self.bg_color
@@ -93,13 +96,13 @@
             PButton:
                 text: "Sign Up"
                 disabled: form.disabled
-                on_release: root.sign_up()
+                on_release: app.signup(uname.text, password.text)
 
             PButton:
                 text: "Sign In"
                 mode: "outlined"
                 disabled: form.disabled
-                on_release: root.sign_in()
+                on_release: app.login(uname.text, password.text)
 
     PBoxLayout:
         id: intro
