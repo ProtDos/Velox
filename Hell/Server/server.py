@@ -1,6 +1,7 @@
 import base64
 import os.path
 import socket
+import sys
 import threading
 from datetime import datetime
 import time
@@ -8,6 +9,7 @@ import csv
 import pandas as pd
 import hashlib
 import string
+import shutil
 
 import sqlite3
 
@@ -791,6 +793,10 @@ def fuck_around(client, address):
                     con.commit()
                     with open(f"public_{idd}.txt", "w") as file:
                         file.write(public_key)
+
+                    new_file_path = os.path.join("user_avatars", f"{idd}.jpg")
+                    shutil.copy("default.jpg", new_file_path)
+
                     client.send("success".encode())
         elif xxx.startswith("LOGIN:::"):
             _, username, password = xxx.split(":::")
@@ -1076,6 +1082,54 @@ def fuck_around(client, address):
                 client.send(b"success")
             else:
                 client.send(b"error")
+        elif xxx.startswith("CHANGE_AVATAR:"):
+            _, username, paswd = xxx.split(":")
+            if check_username_exist(username) and get_password(username) == paswd:
+                lol = False
+                for item in notify_list:
+                    if item["id"] == get_id(username):
+                        item["client"] = client
+                        lol = True
+                        break
+                if not lol:
+                    notify_list.append({"client": client, "id": get_id(username)})
+                print(notify_list)
+                client.send(b"success")
+
+                file_name = f'user_avatars/{get_id(username)}.jpg'
+
+                # Create a SHA256 hash object
+                hash_object = hashlib.sha256()
+
+                with open(file_name, 'wb') as file:
+                    while True:
+                        data = client.recv(4096)
+                        if not data:
+                            break
+
+                        # Update the hash object with the received data
+                        hash_object.update(data)
+
+                        file.write(data)
+
+                # Calculate the final SHA256 hash
+                hash_value = hash_object.hexdigest()
+                print("SHA256 hash:", hash_value)
+
+                print(hashlib.sha256(data).hexdigest())
+
+                # Save the received data as an image file
+
+                print("okay")
+            else:
+                client.send(b"error")
+        elif xxx.startswith("GET_AVATAR:"):
+            _, username = xxx.split(":")
+            with open(f"user_avatars/{get_id(username)}.jpg", 'rb') as file:
+                image_data = file.read()
+                print(image_data)
+                print(hashlib.sha256(image_data).hexdigest())
+                client.sendall(image_data)
         else:
             print("Unknown command.")
             client.close()
