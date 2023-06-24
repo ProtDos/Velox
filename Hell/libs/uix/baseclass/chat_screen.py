@@ -54,8 +54,20 @@ class ChatScreen(PScreen):
             Animation.cancel_all(rv, "scroll_y")
             Animation(scroll_y=0, t="out_quad", d=0.5).start(rv)
 
+    def open_warning(self, mess):
+        PDialog(
+            content=VerifyFail(
+                message=mess
+            )
+        ).open()
+
 
 class UserInfoDialogContent(PBoxLayout):
     title = StringProperty()
     image = StringProperty()
     about = StringProperty()
+
+
+class VerifyFail(PBoxLayout):
+    message = StringProperty()
+

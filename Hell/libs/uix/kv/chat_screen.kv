@@ -5,7 +5,8 @@
 
         PToolbar:
             title: root.title
-            left_action_items: [["arrow-left", lambda x: root.manager.goto_previous_screen()]]
+            # left_action_items: [["arrow-left", lambda x: root.manager.goto_previous_screen()]]
+            left_action_items: [["arrow-left", lambda x: app.close_chat()]]
             on_title_press: root.show_user_info()
 
         RecycleView:
@@ -56,7 +57,8 @@
         font_size: sp(35)
         pos_hint: {"center_x": .9}
         y: dp(55)-(self.width/2)
-        on_release: root.send(field.text.strip())
+        on_release:
+            app.send_message(field.text.strip())
 
     PIconButton:
         icon: "chevrons-down"
@@ -99,3 +101,49 @@
         font_size: sp(16)
         adaptive_height: True
         text_size: self.width, None
+
+<VerifyFail>
+    orientation: "vertical"
+    adaptive_height: True
+    padding: dp(10)
+    spacing: dp(10)
+
+    canvas:
+        Color:
+            rgba: 1, 0, 0, 1
+        Line:
+            rectangle: self.x, self.y, self.width, self.height
+            width: 1
+
+    PLabel:
+        text: "Warning!"
+        halign: "center"
+        font_name: "LexendMedium"
+        adaptive_height: True
+        font_size: sp(30)
+
+    PLabel:
+        text: "This message:"
+        halign: "center"
+        font_name: "LexendLight"
+        font_size: sp(15)
+        adaptive_height: True
+        text_size: self.width, None
+
+    PLabel:
+        text: root.message
+        halign: "center"
+        font_name: "LexendLight"
+        font_size: sp(13)
+        adaptive_height: True
+        text_size: self.width, None
+        color: 0.5, 0.5, 0.5, 1
+
+    PLabel:
+        text: "couldn't be verified. Proceed with caution."
+        halign: "center"
+        font_name: "LexendLight"
+        font_size: sp(15)
+        adaptive_height: True
+        text_size: self.width, None
+

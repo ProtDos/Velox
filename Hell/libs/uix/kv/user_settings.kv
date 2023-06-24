@@ -19,7 +19,7 @@
                 adaptive_height: True
 
                 FitImage:
-                    source: "assets/images/2.jpg"
+                    source: app.avatar_path
                     radius: [dp(10),]
                     size_hint: None, None
                     size: dp(140), dp(140)
@@ -28,16 +28,22 @@
                         app.change_avatar()
 
                 ListItem:
-                    text: "Change Username"
-                    secondary_text: "Switches theme between Dark and Light"
+                    text: "Username"
+                    secondary_text: "Change your username"
                     icon: root.theme_icon
-                    on_release: root.change_theme()
+                    on_release: root.change_username()
 
                 ListItem:
-                    text: "Change Password"
-                    secondary_text: "To know more about this app"
+                    text: "Password"
+                    secondary_text: "Change your password"
                     icon: "alert-circle"
-                    on_release: root.open_about()
+                    on_release: root.change_password()
+
+                ListItem:
+                    text: "Bio"
+                    secondary_text: "Change your about-me"
+                    icon: "alert-circle"
+                    on_release: root.change_password()
 
                 Widget:
                     size_hint_y: None
